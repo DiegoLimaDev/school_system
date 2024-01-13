@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: consulticom-db
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: 'consulticom-db'
+      POSTGRES_PASSWORD: '1234'
+      POSTGRES_USER: 'postgres'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      default:
+        aliases:
+          - postgres.service
+  node:
+    container_name: nestjs_project
+    build: .
+    command: npm run start:prod
+    ports:
+      - 3010:3000
