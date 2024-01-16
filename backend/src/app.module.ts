@@ -9,12 +9,14 @@ import { AuthModule } from './app/core/auth/auth.module';
 import { SchoolModule } from './app/api/school/school.module';
 import { TeachersModule } from './app/api/teachers/teachers.module';
 import { StudentModule } from './app/api/student/student.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: process.env.TYPEORM_HOST,
       port: 5432,
       username: 'postgres',
       password: '1234',
