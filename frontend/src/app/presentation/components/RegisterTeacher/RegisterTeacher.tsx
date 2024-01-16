@@ -24,7 +24,7 @@ const RegisterTeacher = () => {
 
   //função assíncrona para disparar o get nas escolas
   const getData = async () => {
-    dispatch(getSchools());
+    await dispatch(getSchools());
   };
 
   useEffect(() => {
