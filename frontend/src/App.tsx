@@ -1,7 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import Home from './app/presentation/pages/Home/Home';
 import { GlobalStyle } from './styles/globalStyles';
-import Admin from './app/presentation/pages/Admin/Admin';
+import AdminPage from './app/presentation/pages/Admin/Admin';
+import TeacherPage from './app/presentation/pages/Teacher/Teacher';
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/teacher" element={<TeacherPage />} />
       </Routes>
     </>
   );
