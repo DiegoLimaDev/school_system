@@ -6,7 +6,7 @@ import getAllStudentsReducer from './getAllStudents/getAllStudents.slice';
 import getTeacherStudentsReducer from './getTeacherStudents/getTeacherStudents.slice';
 
 //exporta a combinação de todos reducers para o store
-export default combineReducers({
+export const rootReducer = combineReducers({
   activeCpfReducer,
   getTeacherReducer,
   getSchoolsReducer,
