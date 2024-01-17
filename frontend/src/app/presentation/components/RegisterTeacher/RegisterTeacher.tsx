@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   MenuItem,
   OutlinedInput,
   Select,
@@ -14,6 +13,7 @@ import { TeacherDomain } from '../../../domain/teacher.domain';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../application/hooks';
 import { getSchools } from '../../../application/getSchools/getSchools.slice';
+import MyButton from '../Button/MyButton';
 
 const RegisterTeacher = () => {
   const url = 'http://localhost:8000/';
@@ -79,11 +79,9 @@ const RegisterTeacher = () => {
               );
             })}
           </Select>
-          <Button variant="contained" onClick={handleSubmit(submitTeacher)}>
-            <Typography fontSize={theme.sizes.small}>
-              Criar Professor
-            </Typography>
-          </Button>
+          <MyButton variant="contained" onClick={handleSubmit(submitTeacher)}>
+            Criar Professor
+          </MyButton>
         </Box>
       </form>
     </>
