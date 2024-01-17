@@ -1,19 +1,17 @@
 import { Box, Typography } from '@mui/material';
 import RegisterStudent from '../../components/RegisterStudent/RegisterStudent';
 import { useAppDispatch, useAppSelector } from '../../../application/hooks';
-import { getTeacher } from '../../../application/getTeacher/getTeacher.slice';
 import { useEffect, useState } from 'react';
 import { theme } from '../../../../styles/theme';
-import { getAllStudents } from '../../../application/getAllStudents/getAllStudents.slice';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import EditStudentDialog from '../../components/EditStudentDialog/EditStudentDialog';
 import { getTeacherStudents } from '../../../application/getTeacherStudents/getTeacherStudents.slice';
+import LeaveButton from '../../components/LeaveButton/LeaveButton';
 
 const TeacherPage = () => {
   const dispatch = useAppDispatch();
   const { teacher } = useAppSelector((state) => state.getTeacherReducer);
-  const { activeCpf } = useAppSelector((state) => state.activeCpfReducer);
-  const { entities, loading } = useAppSelector(
+  const { entities } = useAppSelector(
     (state) => state.getTeacherStudentsReducer,
   );
 
@@ -25,9 +23,7 @@ const TeacherPage = () => {
 
   //função para disparo assíncrono dos gets
   const getDataDispatch = async () => {
-    await dispatch(getTeacher(activeCpf));
-    await dispatch(getAllStudents());
-    await dispatch(getTeacherStudents(teacher!.id));
+    dispatch(getTeacherStudents(teacher!.id));
   };
 
   useEffect(() => {
@@ -35,7 +31,7 @@ const TeacherPage = () => {
   }, []);
 
   return (
-    <Box>
+    <>
       <Box
         display={'flex'}
         m={'5rem auto 0 auto'}
@@ -46,9 +42,6 @@ const TeacherPage = () => {
           Professor
         </Typography>
         <Typography fontSize={theme.sizes.medium}>{teacher?.name}</Typography>
-        <Typography
-          fontSize={theme.sizes.medium}
-        >{`${teacher?.cpf.substring(0, 3)}.***.***-${teacher?.cpf.substring(9, 11)}`}</Typography>
       </Box>
       <RegisterStudent editOrCreate={'Criar aluno'} />
       <Box
@@ -57,50 +50,47 @@ const TeacherPage = () => {
         width={'fit-content'}
         flexDirection={'column'}
       >
-        {loading ? (
-          <p>carregando estudantes</p>
-        ) : (
-          <Box>
-            <Typography fontSize={theme.sizes.medium} textAlign={'center'}>
-              Lista de estudantes
-            </Typography>
-            {entities.map((student) => {
-              return (
-                <Box
-                  key={student.id}
-                  border={'0.1rem solid'}
-                  borderRadius={'0.5rem'}
-                  my={'1rem'}
-                  p={'1rem'}
-                  display={'flex'}
-                  flexDirection={'row'}
-                  justifyContent={'space-between'}
-                  alignItems={'center'}
-                >
-                  <Typography fontSize={theme.sizes.small}>
-                    {student.name}
-                  </Typography>
-                  <Icon
-                    icon={'carbon:edit'}
-                    height={15}
-                    cursor={'pointer'}
-                    onClick={() => {
-                      setIsOpen(!isOpen);
-                      setIdStudent(student.id);
-                    }}
-                  />
-                </Box>
-              );
-            })}
-          </Box>
-        )}
+        <Box>
+          <Typography fontSize={theme.sizes.medium} textAlign={'center'}>
+            Lista de estudantes
+          </Typography>
+          {entities.map((student) => {
+            return (
+              <Box
+                key={student.id}
+                border={'0.1rem solid'}
+                borderRadius={'0.5rem'}
+                my={'1rem'}
+                p={'1rem'}
+                display={'flex'}
+                flexDirection={'row'}
+                justifyContent={'space-between'}
+                alignItems={'center'}
+              >
+                <Typography fontSize={theme.sizes.small}>
+                  {student.name}
+                </Typography>
+                <Icon
+                  icon={'carbon:edit'}
+                  height={15}
+                  cursor={'pointer'}
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                    setIdStudent(student.id);
+                  }}
+                />
+              </Box>
+            );
+          })}
+        </Box>
       </Box>
+      <LeaveButton />
       <EditStudentDialog
         isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
         id={idStudent}
       />
-    </Box>
+    </>
   );
 };
 
