@@ -10,11 +10,11 @@ import { store } from './app/application/store.ts';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+      <PersistGate persistor={persistor}>
+        <Provider store={store}>
           <App />
-        </PersistGate>
-      </Provider>
+        </Provider>
+      </PersistGate>
     </BrowserRouter>
   </React.StrictMode>,
 );
