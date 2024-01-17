@@ -1,6 +1,6 @@
-import { Box, Button, Dialog, DialogActions, Typography } from '@mui/material';
+import { Box, Dialog, DialogActions } from '@mui/material';
 import RegisterStudent from '../RegisterStudent/RegisterStudent';
-import { theme } from '../../../../styles/theme';
+import MyButton from '../Button/MyButton';
 
 type props = {
   isOpen: boolean;
@@ -16,9 +16,9 @@ const EditStudentDialog = ({ isOpen, onClick, id }: props) => {
           <RegisterStudent editOrCreate={'Editar aluno'} id={id} />
         </Box>
         <DialogActions>
-          <Button variant="contained" onClick={onClick}>
-            <Typography fontSize={theme.sizes.small}>Fechar</Typography>
-          </Button>
+          <MyButton variant="contained" onClick={onClick}>
+            Fechar
+          </MyButton>
         </DialogActions>
       </Dialog>
     </Box>
