@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   InputAdornment,
   MenuItem,
   OutlinedInput,
@@ -15,7 +14,8 @@ import { LoginDataDomain } from '../../../domain/loginData.domain';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from '../../../application/hooks';
-import { setActiveCpf } from '../../../application/activeCpf/activeCpf.slice';
+import { getTeacher } from '../../../application/getTeacher/getTeacher.slice';
+import MyButton from '../../components/Button/MyButton';
 
 const Home = () => {
   const url = 'http://localhost:8000/login';
@@ -45,9 +45,9 @@ const Home = () => {
         password: data.password,
         usertype: value,
       })
-      .then(() => {
-        //define o cpf ativo a partir do login
-        dispatch(setActiveCpf(cpf));
+      .then(async () => {
+        //dispara o get do professor que será logado
+        await dispatch(getTeacher(cpf));
 
         //verificação do tipo de usuário que difere a navegação de páginas
         if (value === 0) navigate('/admin');
@@ -61,26 +61,32 @@ const Home = () => {
   };
 
   return (
-    <form>
+    <form style={{ placeItems: 'center', display: 'flex' }}>
       <Box
         display={'flex'}
         flexDirection={'column'}
         width={'20rem'}
         m={'5rem auto 0 auto'}
         justifyContent={'space-between'}
-        height={'20rem'}
+        height={'25rem'}
       >
         <OutlinedInput
           notched
           placeholder={'cpf'}
-          {...register('cpf', { required: true })}
-          inputProps={{ maxLength: 11 }}
+          {...register('cpf', {
+            required: true,
+          })}
+          inputProps={{
+            maxLength: 11,
+            style: { fontSize: theme.sizes.small, border: '1px black' },
+          }}
         />
         <OutlinedInput
           notched
           placeholder={'password'}
           {...register('password', { required: true })}
           type={showPassword ? 'text' : 'password'}
+          inputProps={{ style: { fontSize: theme.sizes.small } }}
           endAdornment={
             <InputAdornment position="end">
               <Icon
@@ -98,16 +104,22 @@ const Home = () => {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Tipo de login"
+          MenuProps={{ style: { fontSize: theme.sizes.small } }}
+          sx={{ fontSize: theme.sizes.small }}
         >
-          <MenuItem value={0}>Admin</MenuItem>
-          <MenuItem value={2}>Professor</MenuItem>
+          <MenuItem value={0} sx={{ fontSize: theme.sizes.verySmall }}>
+            Admin
+          </MenuItem>
+          <MenuItem value={2} sx={{ fontSize: theme.sizes.verySmall }}>
+            Professor
+          </MenuItem>
         </Select>
         {(errors.cpf || errors.password || errors.root) && (
           <Typography>Credenciais inválidas</Typography>
         )}
-        <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-          <Typography fontSize={theme.sizes.small}>Login</Typography>
-        </Button>
+        <MyButton variant="contained" onClick={handleSubmit(onSubmit)}>
+          LOGIN
+        </MyButton>
       </Box>
     </form>
   );
