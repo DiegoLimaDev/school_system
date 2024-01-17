@@ -1,9 +1,10 @@
-import { Box, Button, OutlinedInput, Typography } from '@mui/material';
+import { Box, OutlinedInput, Typography } from '@mui/material';
 import { theme } from '../../../../styles/theme';
 import { useHttp } from '../../../infra/useHttp/useHttp';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { StudentDomain } from '../../../domain/student.domain';
 import { useAppSelector } from '../../../application/hooks';
+import MyButton from '../Button/MyButton';
 
 type props = {
   editOrCreate: string;
@@ -13,7 +14,7 @@ type props = {
 const RegisterStudent = ({ editOrCreate, id }: props) => {
   const url = 'http://localhost:8000/';
   const { register, handleSubmit } = useForm<StudentDomain>();
-  const { activeCpf } = useAppSelector((state) => state.activeCpfReducer);
+  const { teacher } = useAppSelector((state) => state.getTeacherReducer);
 
   //função para submissão/edição de aluno, a verficação é feita dentro da função
   const submitStudent: SubmitHandler<StudentDomain> = async (data) => {
@@ -22,7 +23,7 @@ const RegisterStudent = ({ editOrCreate, id }: props) => {
         .post(`${url}register/student`, {
           name: data.name,
           birthday: data.birthday,
-          teacherCpf: activeCpf,
+          teacherCpf: teacher?.cpf,
         })
         .then(() => window.location.reload())
         .catch((err) => {
@@ -37,7 +38,7 @@ const RegisterStudent = ({ editOrCreate, id }: props) => {
         .patch(`${url}student/${id}`, {
           name: data.name,
           birthday: data.birthday,
-          teacherCpf: activeCpf,
+          teacherCpf: teacher?.cpf,
         })
         .then(() => window.location.reload())
         .catch((err) => {
@@ -72,9 +73,9 @@ const RegisterStudent = ({ editOrCreate, id }: props) => {
             placeholder={'Data de nascimento'}
             {...register('birthday', { required: true })}
           />
-          <Button variant="contained" onClick={handleSubmit(submitStudent)}>
-            <Typography fontSize={theme.sizes.small}>{editOrCreate}</Typography>
-          </Button>
+          <MyButton variant="contained" onClick={handleSubmit(submitStudent)}>
+            {editOrCreate}
+          </MyButton>
         </Box>
       </form>
     </>
