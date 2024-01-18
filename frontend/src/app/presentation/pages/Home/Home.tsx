@@ -114,8 +114,10 @@ const Home = () => {
             Professor
           </MenuItem>
         </Select>
-        {(errors.cpf || errors.password || errors.root) && (
-          <Typography>Credenciais inválidas</Typography>
+        {(errors.cpf || errors.password) && (
+          <Typography fontSize={theme.sizes.small} textAlign={'center'}>
+            Credenciais inválidas
+          </Typography>
         )}
         <MyButton variant="contained" onClick={handleSubmit(onSubmit)}>
           LOGIN
