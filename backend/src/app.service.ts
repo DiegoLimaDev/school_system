@@ -1,5 +1,6 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { AdminService } from './app/api/admin/admin.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AppService implements OnApplicationBootstrap {
@@ -10,9 +11,11 @@ export class AppService implements OnApplicationBootstrap {
     const admin = await this.adminService.findOne('00000000000');
 
     if (!admin) {
+      const password = await bcrypt.hash('12345', 10);
+
       await this.adminService.create({
         cpf: '00000000000',
-        password: '12345',
+        password: password,
         usertype: 0,
       });
     }
