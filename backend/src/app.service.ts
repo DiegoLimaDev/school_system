@@ -11,7 +11,7 @@ export class AppService implements OnApplicationBootstrap {
     const admin = await this.adminService.findOne('00000000000');
 
     if (!admin) {
-      const password = await bcrypt.hash('12345', 10);
+      const password = await bcrypt.hash('123456', 10);
 
       await this.adminService.create({
         cpf: '00000000000',
