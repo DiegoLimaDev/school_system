@@ -11,7 +11,7 @@ export class StudentService {
     private studentRepo: Repository<Student>,
   ) {}
 
-  //retornas todos os estudantes
+  //retorna todos os estudantes
   async getAll(): Promise<StudentDomain[]> {
     return await this.studentRepo.find();
   }
@@ -21,7 +21,7 @@ export class StudentService {
     return await this.studentRepo.save(data);
   }
 
-  //edita um estudante existente
+  //edita um estudante existente fazendo o query pelo id
   async editStudent(
     id: number,
     name: string,
