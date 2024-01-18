@@ -13,7 +13,7 @@ export class AdminService {
     return await this.adminRepo.save(data);
   }
 
-  //encontra o usuário admin no banco
+  //encontra o usuário admin no banco pelo cpf
   async findOne(cpf: string): Promise<AdminDomain> {
     return await this.adminRepo.findOneBy({ cpf });
   }
