@@ -13,7 +13,7 @@ export class StudentController {
     return await this.studentService.getAll();
   }
 
-  //edita um estudante existente
+  //edita um estudante existente usando o id para encontrá-lo
   @Patch(':id')
   async editStudent(
     @Param('id') id: number,
