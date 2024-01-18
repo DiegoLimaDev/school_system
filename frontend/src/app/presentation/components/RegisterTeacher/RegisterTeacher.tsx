@@ -81,9 +81,19 @@ const RegisterTeacher = () => {
               })}
             </Select>
           ) : (
-            <Typography>cadastre uma escola</Typography>
+            <Typography
+              fontSize={theme.sizes.verySmall}
+              color={theme.colors.black}
+              textAlign={'center'}
+            >
+              Cadastre uma escola antes do professor
+            </Typography>
           )}
-          <MyButton variant="contained" onClick={handleSubmit(submitTeacher)}>
+          <MyButton
+            variant="contained"
+            onClick={handleSubmit(submitTeacher)}
+            disabled={entities.length ? false : true}
+          >
             Criar Professor
           </MyButton>
         </Box>
