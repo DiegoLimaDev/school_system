@@ -17,6 +17,10 @@ export class RegisterController {
     @Body('cpf') cpf: string,
     @Body('password') password: string,
   ): Promise<AdminDomain> {
+    //verifica se a senha tem pelo menos 6 digítos
+    if (password.length < 6)
+      throw new BadRequestException('password must have 6 characters');
+
     //encrypt de senha
     const hashedPassword = await bcrypt.hash(password, 10);
 
