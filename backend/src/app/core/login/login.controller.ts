@@ -3,10 +3,12 @@ import { LoginService } from './login.service';
 import * as bcrypt from 'bcrypt';
 import { AdminDomain } from 'src/app/entities/admin/admin.domain';
 
+//rota do login
 @Controller('login')
 export class LoginController {
   constructor(private loginService: LoginService) {}
 
+  //post usado no login
   @Post()
   async validate(
     @Body('cpf')
