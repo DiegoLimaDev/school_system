@@ -1,6 +1,6 @@
 import { Box, Dialog, DialogActions } from '@mui/material';
 import RegisterStudent from '../RegisterStudent/RegisterStudent';
-import MyButton from '../Button/MyButton';
+import LeaveButton from '../LeaveButton/LeaveButton';
 
 type props = {
   isOpen: boolean;
@@ -16,9 +16,7 @@ const EditStudentDialog = ({ isOpen, onClick, id }: props) => {
           <RegisterStudent editOrCreate={'Editar aluno'} id={id} />
         </Box>
         <DialogActions>
-          <MyButton variant="contained" onClick={onClick}>
-            Fechar
-          </MyButton>
+          <LeaveButton onClick={onClick}>Fechar</LeaveButton>
         </DialogActions>
       </Dialog>
     </Box>

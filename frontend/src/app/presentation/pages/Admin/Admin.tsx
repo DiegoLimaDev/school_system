@@ -21,7 +21,7 @@ const AdminPage = () => {
       </Box>
       <RegisterSchool />
       <RegisterTeacher />
-      <LeaveButton />
+      <LeaveButton>Sair</LeaveButton>
     </>
   );
 };

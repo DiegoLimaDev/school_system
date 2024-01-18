@@ -84,7 +84,7 @@ const TeacherPage = () => {
           })}
         </Box>
       </Box>
-      <LeaveButton />
+      <LeaveButton>Sair</LeaveButton>
       <EditStudentDialog
         isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
