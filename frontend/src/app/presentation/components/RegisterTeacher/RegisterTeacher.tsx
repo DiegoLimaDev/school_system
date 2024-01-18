@@ -70,15 +70,19 @@ const RegisterTeacher = () => {
             inputProps={{ maxLength: 11 }}
           />
           <OutlinedInput notched placeholder={'Nome'} {...register('name')} />
-          <Select notched value={schoolName} onChange={handleChange}>
-            {entities.map((school) => {
-              return (
-                <MenuItem value={school.schoolName} key={school.id}>
-                  {school.schoolName}
-                </MenuItem>
-              );
-            })}
-          </Select>
+          {entities.length ? (
+            <Select notched value={schoolName} onChange={handleChange}>
+              {entities.map((school) => {
+                return (
+                  <MenuItem value={school.schoolName} key={school.id}>
+                    {school.schoolName}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          ) : (
+            <Typography>cadastre uma escola</Typography>
+          )}
           <MyButton variant="contained" onClick={handleSubmit(submitTeacher)}>
             Criar Professor
           </MyButton>
