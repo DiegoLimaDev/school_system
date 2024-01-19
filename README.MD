@@ -1,12 +1,20 @@
 ## School System
 
+Esse projeto simula um sistema escolar.
+
+O backend utiliza NestJS com Typescript e banco de dados PostgreSQL.
+
+O frontend utiliza Vite + React + Typescript
+
+A melhor maneira de rodar o projeto é com o docker, dessa maneira o Docker é a única dependência necessária.
+
 Existe um arquivo docker-compose no root do projeto.
 
 Inicie um terminal e utilize o comando `docker compose build` e depois `docker compose up -d` em ambos terminais.
 
-O localhost do backend é na porta `8000`
+Backend: http://localhost:8000/
 
-O localhost do frontend é na porta `5173`
+Frontend: http://localhost:5173/
 
 Utilize o seguinte login como admin:
 
