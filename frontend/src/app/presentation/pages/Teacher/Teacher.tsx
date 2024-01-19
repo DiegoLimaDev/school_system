@@ -7,6 +7,7 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import EditStudentDialog from '../../components/EditStudentDialog/EditStudentDialog';
 import { getTeacherStudents } from '../../../application/getTeacherStudents/getTeacherStudents.slice';
 import LeaveButton from '../../components/LeaveButton/LeaveButton';
+import { useHttp } from '../../../infra/useHttp/useHttp';
 
 const TeacherPage = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +30,11 @@ const TeacherPage = () => {
   useEffect(() => {
     getDataDispatch();
   }, []);
+
+  const deleteStudent = (id: number) => {
+    const url = `http://localhost:8000/student/delete/${id}`;
+    useHttp.delete(url).then(() => window.location.reload);
+  };
 
   return (
     <>
@@ -70,15 +76,23 @@ const TeacherPage = () => {
                 <Typography fontSize={theme.sizes.small}>
                   {student.name}
                 </Typography>
-                <Icon
-                  icon={'carbon:edit'}
-                  height={15}
-                  cursor={'pointer'}
-                  onClick={() => {
-                    setIsOpen(!isOpen);
-                    setIdStudent(student.id);
-                  }}
-                />
+                <Box>
+                  <Icon
+                    icon={'carbon:edit'}
+                    height={15}
+                    cursor={'pointer'}
+                    onClick={() => {
+                      setIsOpen(!isOpen);
+                      setIdStudent(student.id);
+                    }}
+                  />
+                  <Icon
+                    icon={'material-symbols-light:delete-outline'}
+                    height={15}
+                    cursor={'pointer'}
+                    onClick={() => deleteStudent(student.id)}
+                  />
+                </Box>
               </Box>
             );
           })}
