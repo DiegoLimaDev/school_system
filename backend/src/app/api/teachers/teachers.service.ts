@@ -20,4 +20,25 @@ export class TeachersService {
   async findOne(cpf: string): Promise<TeachersDomain> {
     return await this.teachersRepo.findOneBy({ cpf });
   }
+
+  //retora todos os professores
+  async getAllTeachers(): Promise<TeachersDomain[]> {
+    return await this.teachersRepo.find();
+  }
+
+  //edita um professor
+  async editTeacher(
+    id: number,
+    teacher: TeachersDomain,
+  ): Promise<TeachersDomain> {
+    await this.teachersRepo.update({ id }, teacher);
+    return await this.teachersRepo.findOneBy({ id });
+  }
+
+  //delete um professor
+  async deleteTeacher(id: number): Promise<{ deleted: boolean }> {
+    if (await this.teachersRepo.delete({ id })) return { deleted: true };
+
+    return { deleted: false };
+  }
 }
