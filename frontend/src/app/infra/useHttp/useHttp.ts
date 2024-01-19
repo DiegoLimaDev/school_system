@@ -15,5 +15,8 @@ export class useHttp {
   static async patch(url: string, obj: unknown) {
     return await axios.patch(url, obj);
   }
+
+  static async delete(url: string) {
+    return await axios.delete(url);
+  }
 }
-('');
