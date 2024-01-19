@@ -40,4 +40,18 @@ export class StudentService {
     WHERE teacher.id = ${id};
     `);
   }
+
+  //deleta um estudante da tabela
+  async deleteStudent(id: number): Promise<{ deleted: boolean }> {
+    try {
+      await this.studentRepo.delete(id);
+      return { deleted: true };
+    } catch (error) {}
+    return { deleted: false };
+  }
+
+  //encontra um estudante pelo id
+  async findOneStudenById(id: number): Promise<StudentDomain> {
+    return await this.studentRepo.findOneBy({ id });
+  }
 }

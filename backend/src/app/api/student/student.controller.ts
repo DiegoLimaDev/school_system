@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+} from '@nestjs/common';
 import { StudentService } from './student.service';
 import { StudentDomain } from 'src/app/entities/student/student.domain';
 
@@ -30,7 +39,21 @@ export class StudentController {
 
   //get de todos estudantes relacionados ao professor com determinado id
   @Get(':id')
-  async x(@Param('id') id: number): Promise<void> {
+  async getStudentByTeacherRelation(@Param('id') id: number): Promise<void> {
     return await this.studentService.findStudentsByTeacherRelation(id);
+  }
+
+  //rota para deletar o estudante
+  @Delete('/delete/:id')
+  async deleteStudent(
+    @Param('id', new ParseIntPipe()) id: number,
+  ): Promise<{ deleted: boolean }> {
+    const student = await this.studentService.findOneStudenById(id);
+
+    if (!student)
+      throw new BadRequestException(`Student with id ${id} not found`);
+
+    await this.studentService.deleteStudent(id);
+    return { deleted: true };
   }
 }
