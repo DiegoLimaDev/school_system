@@ -75,6 +75,8 @@ const Home = () => {
           placeholder={'cpf'}
           {...register('cpf', {
             required: true,
+            minLength: 11,
+            maxLength: 11,
           })}
           inputProps={{
             maxLength: 11,
@@ -84,7 +86,7 @@ const Home = () => {
         <OutlinedInput
           notched
           placeholder={'password'}
-          {...register('password', { required: true })}
+          {...register('password', { required: true, minLength: 6 })}
           type={showPassword ? 'text' : 'password'}
           inputProps={{ style: { fontSize: theme.sizes.small } }}
           endAdornment={
