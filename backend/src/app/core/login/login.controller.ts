@@ -15,7 +15,10 @@ export class LoginController {
     cpf: string,
     @Body('password') password: string,
     @Body('usertype') usertype: number,
-  ): Promise<AdminDomain | undefined> {
+  ): Promise<AdminDomain | BadRequestException> {
+    if (cpf.length !== 11)
+      return new BadRequestException('cpf must have 11 digits');
+
     //login para usuário admin
     if (usertype === 0) {
       const admin = await this.loginService.validateAdmin(cpf);
