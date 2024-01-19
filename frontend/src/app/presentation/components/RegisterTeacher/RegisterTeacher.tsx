@@ -15,7 +15,13 @@ import { useAppDispatch, useAppSelector } from '../../../application/hooks';
 import { getSchools } from '../../../application/getSchools/getSchools.slice';
 import MyButton from '../Button/MyButton';
 
-const RegisterTeacher = () => {
+type props = {
+  editOrCreate: string;
+  id?: number;
+  cpf?: string;
+};
+
+const RegisterTeacher = ({ editOrCreate, id, cpf }: props) => {
   const url = 'http://localhost:8000/';
   const [schoolName, setSchoolName] = useState('');
   const { register, handleSubmit } = useForm<TeacherDomain>();
@@ -37,18 +43,37 @@ const RegisterTeacher = () => {
 
   //função post de criação de professores
   const submitTeacher: SubmitHandler<TeacherDomain> = async (data) => {
-    useHttp
-      .post(`${url}register/teacher`, {
-        cpf: data.cpf,
-        name: data.name,
-        schoolName: schoolName,
-      })
-      .then(() => window.location.reload())
-      .catch((err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+    if (editOrCreate === 'Criar professor') {
+      useHttp
+        .post(`${url}register/teacher`, {
+          cpf: data.cpf,
+          name: data.name,
+          schoolName: schoolName,
+        })
+        .then(() => window.location.reload())
+        .catch((err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+    }
+
+    if (editOrCreate === 'Editar professor') {
+      useHttp
+        .patch(`${url}teachers/${id}`, {
+          cpf: cpf,
+          name: data.name,
+          schoolName: schoolName,
+        })
+        .then(() => {
+          window.location.reload();
+        })
+        .catch((err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+    }
   };
 
   return (
@@ -62,14 +87,24 @@ const RegisterTeacher = () => {
           justifyContent={'space-between'}
           height={'25rem'}
         >
-          <Typography fontSize={theme.sizes.medium}>Criar Professor</Typography>
+          <Typography fontSize={theme.sizes.medium}>{editOrCreate}</Typography>
+          {editOrCreate === 'Criar professor' && (
+            <OutlinedInput
+              notched
+              placeholder={'CPF'}
+              {...register('cpf', {
+                required: true,
+                maxLength: 11,
+                minLength: 11,
+              })}
+              inputProps={{ maxLength: 11 }}
+            />
+          )}
           <OutlinedInput
             notched
-            placeholder={'CPF'}
-            {...register('cpf', { required: true })}
-            inputProps={{ maxLength: 11 }}
+            placeholder={'Nome'}
+            {...register('name', { required: true })}
           />
-          <OutlinedInput notched placeholder={'Nome'} {...register('name')} />
           {entities.length ? (
             <Select notched value={schoolName} onChange={handleChange}>
               {entities.map((school) => {
@@ -92,9 +127,9 @@ const RegisterTeacher = () => {
           <MyButton
             variant="contained"
             onClick={handleSubmit(submitTeacher)}
-            disabled={entities.length ? false : true}
+            disabled={entities.length || schoolName !== '' ? false : true}
           >
-            Criar Professor
+            {editOrCreate}
           </MyButton>
         </Box>
       </form>
