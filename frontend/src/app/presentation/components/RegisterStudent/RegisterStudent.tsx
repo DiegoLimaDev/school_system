@@ -71,7 +71,11 @@ const RegisterStudent = ({ editOrCreate, id }: props) => {
           <OutlinedInput
             notched
             placeholder={'Data de nascimento'}
-            {...register('birthday', { required: true })}
+            {...register('birthday', {
+              required: true,
+              minLength: 10,
+              maxLength: 10,
+            })}
           />
           <MyButton variant="contained" onClick={handleSubmit(submitStudent)}>
             {editOrCreate}
