@@ -40,12 +40,12 @@ const RegisterSchool = () => {
         <OutlinedInput
           notched
           placeholder={'Nome da escola'}
-          {...register('schoolName')}
+          {...(register('schoolName'), { required: true })}
         />
         <OutlinedInput
           notched
           placeholder={'Endereço'}
-          {...register('schoolAddress')}
+          {...(register('schoolAddress'), { required: true })}
         />
         <MyButton variant="contained" onClick={handleSubmit(submitSchool)}>
           CRIAR ESCOLA
