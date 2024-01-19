@@ -51,7 +51,10 @@ export class RegisterController {
     @Body('cpf') cpf: string,
     @Body('name') name: string,
     @Body('schoolName') schoolName: string,
-  ): Promise<TeachersDomain> {
+  ): Promise<TeachersDomain | BadRequestException> {
+    if (cpf.length !== 11)
+      return new BadRequestException('cpf must have 11 digits');
+
     //seleção dos seis primeiros digitos do cpf para senha
     const password = cpf.substring(0, 6);
 
@@ -78,7 +81,10 @@ export class RegisterController {
     @Body('name') name: string,
     @Body('birthday') birthday: string,
     @Body('teacherCpf') teacherCpf: string,
-  ): Promise<StudentDomain> {
+  ): Promise<StudentDomain | BadRequestException> {
+    if (birthday.length !== 10)
+      return new BadRequestException('Birthday Invalid');
+
     const teacher = await this.registerService.findTeacher(teacherCpf);
 
     if (!teacher) throw new BadRequestException('teacher not found');
